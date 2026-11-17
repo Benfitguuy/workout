@@ -106,3 +106,5 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 .course-list { grid-template-columns: minmax(0, 1fr); }
 .course { min-width: 0; }
+
+.diag { border-top: 1px solid #262d37; margin-top: 10px; padding-top: 8px; display: grid; gap: 8px; }
