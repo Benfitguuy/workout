@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#0b0d10">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="跟練">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="style.css">
+<title>跟練播放器</title>
+</head>
+<body>
+
+<!-- 首頁：課表清單 -->
+<section id="home" class="screen active">
+  <header class="home-head">
+    <h1>跟練播放器</h1>
+    <button id="btn-settings" class="icon-btn" aria-label="設定">⚙︎</button>
+  </header>
+  <p id="data-status" class="muted"></p>
+  <ul id="course-list" class="course-list"></ul>
+
+  <div id="settings" class="settings hidden">
+    <h2>設定</h2>
+    <label class="row"><input type="checkbox" id="opt-beep" checked> 最後 3 秒嗶聲</label>
+    <label class="row"><input type="checkbox" id="opt-voice" checked> 唸出下一個動作</label>
+    <label class="row"><input type="checkbox" id="opt-mix" checked> 嗶聲跟音樂一起播（不暫停 Spotify）</label>
+    <button id="btn-test-sound" class="ghost">試聽聲音</button>
+    <p class="muted small">版本 <span id="app-version"></span></p>
+  </div>
+</section>
+
+<!-- 播放畫面 -->
+<section id="player" class="screen">
+  <div id="stage" class="stage">
+    <!-- 左上：動作名稱或 UP NEXT -->
+    <div class="top-left">
+      <div id="phase-label" class="phase-label"></div>
+      <div id="move-name" class="move-name"></div>
+    </div>
+
+    <!-- 右上：下一個動作預告小視窗 -->
+    <div id="pip" class="pip">
+      <div class="pip-tag">下一個</div>
+      <div id="pip-name" class="pip-name"></div>
+    </div>
+
+    <!-- 左下：圓形倒數 -->
+    <div class="ring-wrap">
+      <svg viewBox="0 0 120 120" class="ring">
+        <circle cx="60" cy="60" r="54" class="ring-bg"/>
+        <circle cx="60" cy="60" r="54" class="ring-fg" id="ring-fg"/>
+      </svg>
+      <div id="count" class="count">0</div>
+    </div>
+
+    <!-- 右下：完成 % 與第幾個 -->
+    <div class="bottom-right">
+      <div id="pct" class="pct">0%</div>
+      <div id="idx" class="idx"></div>
+    </div>
+
+    <!-- 暫停遮罩 -->
+    <div id="paused" class="paused hidden">⏸ 暫停中<br><span class="small">點一下繼續</span></div>
+
+    <!-- 結束畫面 -->
+    <div id="done" class="done hidden">
+      <div class="done-title">完成！</div>
+      <div id="done-sub" class="done-sub"></div>
+      <button id="btn-done-home" class="primary">回課表</button>
+    </div>
+  </div>
+
+  <!-- 控制列 -->
+  <nav class="controls">
+    <button id="btn-exit" aria-label="結束">✕</button>
+    <button id="btn-prev" aria-label="上一個">⏮</button>
+    <button id="btn-pause" aria-label="暫停">⏸</button>
+    <button id="btn-next" aria-label="下一個">⏭</button>
+  </nav>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>
