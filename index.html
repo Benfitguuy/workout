@@ -30,7 +30,12 @@
     <label class="row"><input type="checkbox" id="opt-beep" checked> 最後 3 秒嗶聲</label>
     <label class="row"><input type="checkbox" id="opt-voice" checked> 唸出下一個動作</label>
     <label class="row"><input type="checkbox" id="opt-mix" checked> 嗶聲跟音樂一起播（不暫停 Spotify）</label>
-    <button id="btn-test-sound" class="ghost">試聽聲音</button>
+    <div class="diag">
+      <p class="small">🔧 聲音檢查（先開 YouTube Music 放歌，再分別按，看哪個會讓音樂停掉）</p>
+      <button id="btn-test-beep" class="ghost">① 試聽嗶聲</button>
+      <button id="btn-test-voice" class="ghost">② 試聽語音</button>
+      <p class="small muted" id="diag-info"></p>
+    </div>
     <p class="muted small">版本 <span id="app-version"></span></p>
   </div>
 </section>
