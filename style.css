@@ -1,0 +1,108 @@
+/* 跟練播放器：深色、超大字，iPhone 放地上也看得清楚 */
+:root {
+  --bg: #0b0d10;
+  --fg: #f5f7fa;
+  --muted: #8b95a3;
+  --work: #3ddc84;   /* 動作中：綠 */
+  --rest: #4aa8ff;   /* 休息：藍 */
+  --prep: #ffb020;   /* 準備：橘 */
+  --accent: var(--work);
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-t: env(safe-area-inset-top, 0px);
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Helvetica Neue", sans-serif; }
+body { overscroll-behavior: none; }
+button { font: inherit; color: inherit; cursor: pointer; }
+.hidden { display: none !important; }
+.muted { color: var(--muted); }
+.small { font-size: .8em; }
+
+.screen { display: none; min-height: 100%; }
+.screen.active { display: block; }
+
+/* ---------- 首頁 ---------- */
+#home { padding: calc(16px + var(--safe-t)) 18px calc(24px + var(--safe-b)); max-width: 720px; margin: 0 auto; }
+.home-head { display: flex; align-items: center; justify-content: space-between; }
+.home-head h1 { font-size: 28px; margin: 8px 0; }
+.icon-btn { background: none; border: 0; font-size: 26px; padding: 8px; }
+.course-list { list-style: none; padding: 0; margin: 12px 0; display: grid; gap: 12px; }
+.course { background: #161a20; border-radius: 16px; padding: 16px 18px; display: flex; align-items: center; gap: 14px; }
+.course .info { flex: 1; min-width: 0; }
+.course h3 { margin: 0 0 4px; font-size: 20px; }
+.course p { margin: 0; color: var(--muted); font-size: 14px; }
+.course .moves { margin-top: 6px; font-size: 13px; color: #aab4c0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.primary { background: var(--work); color: #06210f; border: 0; border-radius: 999px; padding: 12px 22px; font-weight: 700; font-size: 18px; }
+.ghost { background: none; border: 1px solid #333b46; border-radius: 999px; padding: 10px 18px; }
+.settings { background: #161a20; border-radius: 16px; padding: 16px 18px; margin-top: 16px; }
+.settings h2 { margin: 0 0 8px; font-size: 18px; }
+.row { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 16px; }
+.row input { width: 22px; height: 22px; }
+
+/* ---------- 播放畫面 ---------- */
+#player.active { display: flex; flex-direction: column; height: 100dvh; }
+.stage { position: relative; flex: 1; overflow: hidden; background: #111418; transition: background .3s; }
+#player[data-phase="work"] { --accent: var(--work); }
+#player[data-phase="rest"] { --accent: var(--rest); }
+#player[data-phase="prep"] { --accent: var(--prep); }
+#player[data-phase="rest"] .stage,
+#player[data-phase="prep"] .stage { background: #07090b; }
+
+.top-left { position: absolute; left: 5vmin; top: calc(4vmin + var(--safe-t)); right: 5vmin; }
+.phase-label { font-size: 6vmin; font-weight: 800; letter-spacing: .05em; color: var(--accent); }
+.move-name { font-size: 13vmin; line-height: 1.02; font-weight: 900; text-transform: uppercase; word-break: break-word; margin-top: 1vmin; }
+#player[data-phase="work"] .move-name { margin-top: 0; }
+
+/* 右上小視窗：只在休息/準備時顯示大框；動作中縮小 */
+.pip { position: absolute; right: 4vmin; top: calc(4vmin + var(--safe-t)); width: 38vmin; aspect-ratio: 16/10;
+  border: 3px solid var(--accent); border-radius: 14px; background: #1b2028; padding: 2.4vmin;
+  display: flex; flex-direction: column; justify-content: space-between; opacity: 0; transform: scale(.9); transition: .25s; }
+#player[data-phase="rest"] .pip, #player[data-phase="prep"] .pip { opacity: 1; transform: none; }
+#player[data-phase="rest"] .top-left, #player[data-phase="prep"] .top-left { right: 46vmin; }
+.pip-tag { font-size: 3vmin; color: var(--muted); font-weight: 700; }
+.pip-name { font-size: 5vmin; font-weight: 800; text-transform: uppercase; line-height: 1.05; }
+
+/* 左下圓形倒數 */
+.ring-wrap { position: absolute; left: 4vmin; bottom: 4vmin; width: 42vmin; height: 42vmin; }
+.ring { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ring-bg { fill: none; stroke: #232a33; stroke-width: 10; }
+.ring-fg { fill: none; stroke: var(--accent); stroke-width: 10; stroke-linecap: round;
+  stroke-dasharray: 339.292; stroke-dashoffset: 0; }
+.count { position: absolute; inset: 0; display: grid; place-items: center; font-size: 19vmin; font-weight: 900; font-variant-numeric: tabular-nums; }
+.count.last3 { color: var(--accent); }
+
+/* 右下完成 % */
+.bottom-right { position: absolute; right: 5vmin; bottom: 5vmin; text-align: right; }
+.pct { font-size: 9vmin; font-weight: 800; font-variant-numeric: tabular-nums; }
+.idx { font-size: 4vmin; color: var(--muted); }
+
+.paused, .done { position: absolute; inset: 0; background: rgba(0,0,0,.72); display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center; font-size: 9vmin; font-weight: 800; gap: 3vmin; }
+.done-title { font-size: 14vmin; color: var(--work); }
+.done-sub { font-size: 5vmin; color: var(--muted); font-weight: 600; }
+
+.controls { display: flex; justify-content: space-around; padding: 10px 10px calc(10px + var(--safe-b)); background: #0b0d10; }
+.controls button { background: #1b2028; border: 0; border-radius: 999px; width: 64px; height: 64px; font-size: 26px; }
+#btn-pause { width: 96px; background: var(--accent); color: #05140b; }
+
+/* 橫放時：倒數圈稍小、名稱更大 */
+@media (orientation: landscape) {
+  .move-name { font-size: 12vmin; }
+  .ring-wrap { width: 36vmin; height: 36vmin; }
+  .count { font-size: 16vmin; }
+  .pip { width: 44vmin; }
+}
+
+/* --- 測試後修正 --- */
+.course .info { overflow: hidden; }
+.course .primary { flex-shrink: 0; }
+.controls button { font-size: 30px; }
+#btn-pause { font-size: 32px; }
+/* 直放、動作中：名稱再放大，填滿中間空白 */
+@media (orientation: portrait) {
+  #player[data-phase="work"] .move-name { font-size: 17vmin; }
+  .phase-label { font-size: 5.5vmin; }
+}
+.course-list { grid-template-columns: minmax(0, 1fr); }
+.course { min-width: 0; }
