@@ -1,0 +1,186 @@
+{
+ "updated": "2026-11-17 23:27",
+ "courses": [
+  {
+   "id": "測試_1分鐘",
+   "name": "測試：1 分鐘試播",
+   "note": "用來確認聲音、倒數、螢幕不變暗",
+   "prep": 5,
+   "items": [
+    {
+     "name": "深蹲",
+     "work": 10,
+     "rest": 5
+    },
+    {
+     "name": "Push Ups",
+     "work": 10,
+     "rest": 5
+    },
+    {
+     "name": "開合跳",
+     "work": 10,
+     "rest": 5
+    }
+   ]
+  },
+  {
+   "id": "範例_全身20分鐘",
+   "name": "範例：全身 20 分鐘（TIFF x DAN 動作順序）",
+   "note": "無器材，參考影片的動作順序",
+   "prep": 10,
+   "items": [
+    {
+     "name": "Push Ups",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Shoulder Taps",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Commandos",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Lat Pull to Push Up",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Plank Toe Touches",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Alt Rear Lunges",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Squats",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Alt Curtsy Lunges",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Calf Hops",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Alt Lateral Lunges",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Crunch Pause",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Oblique Crunch R",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Oblique Crunch L",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Tabletop Twist Crunch",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Reverse Crunch",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Leg Lift + Hip Lift",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Alt Plank Knee Tuck",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Jump Switch Lunges",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Pop Squats",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Frog Extension",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Squat Walk",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "1-1/2 Squat Jumps",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Skullcrusher Push Ups",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Mountain Climbers",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Lateral Push Ups",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Alt Plank Rows",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "Superman Hold",
+     "work": 30,
+     "rest": 15
+    },
+    {
+     "name": "High Knees",
+     "work": 30,
+     "rest": 0
+    },
+    {
+     "name": "Superman Push Ups",
+     "work": 30,
+     "rest": 0
+    },
+    {
+     "name": "Burpees",
+     "work": 30,
+     "rest": 15
+    }
+   ]
+  }
+ ]
+}
