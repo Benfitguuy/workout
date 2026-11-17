@@ -3,7 +3,7 @@
  * 流程：準備 → 動作 → 休息 → 動作 … → 完成
  */
 'use strict';
-const APP_VERSION = '1.0.1';
+const APP_VERSION = '1.0.2';
 const RING_LEN = 2 * Math.PI * 54; // 圓周長，對應 style.css 的 stroke-dasharray
 
 const $ = (id) => document.getElementById(id);
@@ -50,7 +50,13 @@ function say(text) {
   u.lang = zh ? 'zh-TW' : 'en-US'; u.rate = 1;
   speechSynthesis.cancel(); speechSynthesis.speak(u);
 }
-$('btn-test-sound').onclick = () => { unlockAudio(); beep(); setTimeout(() => beep(1320, 0.4), 400); setTimeout(() => say('Push Ups'), 900); };
+$('btn-test-beep').onclick = () => { unlockAudio(); const b = opts.beep; opts.beep = true; beep(); setTimeout(() => beep(880), 1000); setTimeout(() => { beep(1320, 0.4, 0.6); opts.beep = b; }, 2000); };
+$('btn-test-voice').onclick = () => { const v = opts.voice; opts.voice = true; say('Push Ups'); opts.voice = v; };
+(function diagInfo() {
+  const ios = (navigator.userAgent.match(/OS (\d+)_(\d+)/) || []).slice(1).join('.');
+  const standalone = window.navigator.standalone || matchMedia('(display-mode: standalone)').matches;
+  $('diag-info').textContent = `iOS ${ios || '?'}｜主畫面模式：${standalone ? '是' : '否'}｜混音功能：${navigator.audioSession ? '支援' : '不支援'}｜防變暗：${'wakeLock' in navigator ? '支援' : '不支援'}`;
+})();
 
 /* ---------------- 防止螢幕變暗 ---------------- */
 let wakeLock = null;
@@ -241,6 +247,9 @@ document.addEventListener('visibilitychange', () => {
 /* ---------------- 離線 ---------------- */
 if ('serviceWorker' in navigator && location.protocol !== 'file:') {
   navigator.serviceWorker.register('sw.js').catch(() => {});
+  // 有新版時自動重新整理（運動中不會）
+  let reloaded = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => { if (!timer && !reloaded) { reloaded = true; location.reload(); } });
 }
 
 loadCourses();
