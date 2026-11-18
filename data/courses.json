@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-18 10:34",
+ "updated": "2026-11-18 11:02",
  "courses": [
   {
    "id": "測試_1分鐘",
@@ -10,17 +10,20 @@
     {
      "name": "深蹲",
      "work": 10,
-     "rest": 5
+     "rest": 5,
+     "voice": "voice/74a0f03e23e7.mp3"
     },
     {
      "name": "Push Ups",
      "work": 10,
-     "rest": 5
+     "rest": 5,
+     "voice": "voice/de5fc8360b4e.mp3"
     },
     {
      "name": "開合跳",
      "work": 10,
-     "rest": 5
+     "rest": 5,
+     "voice": "voice/25ee59193846.mp3"
     }
    ]
   },
@@ -33,52 +36,62 @@
     {
      "name": "Push Ups",
      "work": 30,
-     "rest": 15
+     "rest": 15,
+     "voice": "voice/de5fc8360b4e.mp3"
     },
     {
      "name": "Shoulder Taps",
      "work": 30,
-     "rest": 15
+     "rest": 15,
+     "voice": "voice/072e5c2cb6b7.mp3"
     },
     {
      "name": "Commandos",
      "work": 30,
-     "rest": 15
+     "rest": 15,
+     "voice": "voice/3beab9ea70b3.mp3"
     },
     {
      "name": "Lat Pull to Push Up",
      "work": 30,
-     "rest": 15
+     "rest": 15,
+     "voice": "voice/0fd37ebce4b2.mp3"
     },
     {
      "name": "Plank Toe Touches",
      "work": 30,
-     "rest": 15
+     "rest": 15,
+     "voice": "voice/59c141a6659a.mp3"
     },
     {
      "name": "Alt Rear Lunges",
      "work": 30,
-     "rest": 15
+     "rest": 15,
+     "voice": "voice/15145f9c1502.mp3"
     },
     {
      "name": "Squats",
      "work": 30,
-     "rest": 15
+     "rest": 15,
+     "voice": "voice/877cefe7bfca.mp3"
     },
     {
      "name": "Alt Curtsy Lunges",
      "work": 30,
-     "rest": 15
+     "rest": 15,
+     "voice": "voice/e2f396ad5ead.mp3"
     },
     {
      "name": "Calf Hops",
      "work": 30,
-     "rest": 15
+     "rest": 15,
+     "voice": "voice/9b1e2cea18bc.mp3"
     },
     {
      "name": "Alt Lateral Lunges",
      "work": 30,
-     "rest": 15
+     "rest": 15,
+     "voice": "voice/c9f69f4ea443.mp3"
     },
     {
      "name": "Crunch Pause",
@@ -88,22 +101,26 @@
     {
      "name": "Oblique Crunch R",
      "work": 30,
-     "rest": 15
+     "rest": 15,
+     "voice": "voice/1f907c0b77e2.mp3"
     },
     {
      "name": "Oblique Crunch L",
      "work": 30,
-     "rest": 15
+     "rest": 15,
+     "voice": "voice/72be575188af.mp3"
     },
     {
      "name": "Tabletop Twist Crunch",
      "work": 30,
-     "rest": 15
+     "rest": 15,
+     "voice": "voice/6c9ad99c0109.mp3"
     },
     {
      "name": "Reverse Crunch",
      "work": 30,
-     "rest": 15
+     "rest": 15,
+     "voice": "voice/88817313f314.mp3"
     },
     {
      "name": "Leg Lift + Hip Lift",
@@ -143,7 +160,8 @@
     {
      "name": "Skullcrusher Push Ups",
      "work": 30,
-     "rest": 15
+     "rest": 15,
+     "voice": "voice/498f77475855.mp3"
     },
     {
      "name": "Mountain Climbers",
@@ -153,32 +171,38 @@
     {
      "name": "Lateral Push Ups",
      "work": 30,
-     "rest": 15
+     "rest": 15,
+     "voice": "voice/4e06abb04bc2.mp3"
     },
     {
      "name": "Alt Plank Rows",
      "work": 30,
-     "rest": 15
+     "rest": 15,
+     "voice": "voice/ffd5594c5d9d.mp3"
     },
     {
      "name": "Superman Hold",
      "work": 30,
-     "rest": 15
+     "rest": 15,
+     "voice": "voice/b7c36b7586cf.mp3"
     },
     {
      "name": "High Knees",
      "work": 30,
-     "rest": 0
+     "rest": 0,
+     "voice": "voice/c8d23b9cd71c.mp3"
     },
     {
      "name": "Superman Push Ups",
      "work": 30,
-     "rest": 0
+     "rest": 0,
+     "voice": "voice/136a443bef4b.mp3"
     },
     {
      "name": "Burpees",
      "work": 30,
-     "rest": 15
+     "rest": 15,
+     "voice": "voice/4e7adb75efa8.mp3"
     }
    ]
   }
