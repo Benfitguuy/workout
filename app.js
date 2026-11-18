@@ -3,7 +3,7 @@
  * 流程：準備 → 動作 → 休息 → 動作 … → 完成
  */
 'use strict';
-const APP_VERSION = '1.1.0';
+const APP_VERSION = '1.1.1';
 const RING_LEN = 2 * Math.PI * 54; // 圓周長，對應 style.css 的 stroke-dasharray
 
 const $ = (id) => document.getElementById(id);
@@ -14,7 +14,7 @@ const store = {
 const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, '0')}`;
 
 /* ---------------- 設定 ---------------- */
-const opts = { beep: store.get('opt-beep', true), voice: store.get('opt-voice', true), mix: store.get('opt-mix', true), vol: store.get('opt-vol', 1.3) };
+const opts = { beep: store.get('opt-beep', true), voice: store.get('opt-voice', true), mix: store.get('opt-mix', true), vol: store.get('opt-vol', 1.0) };
 $('opt-vol').value = opts.vol;
 $('opt-vol').addEventListener('input', (e) => { opts.vol = Number(e.target.value); store.set('opt-vol', opts.vol); });
 for (const k of ['beep', 'voice', 'mix']) {
@@ -56,8 +56,10 @@ function playVoice(item) {
   if (!opts.voice || !item) return;
   const b = item.voice && voiceBuf.get(item.voice);
   if (b && actx) {
-    const s = actx.createBufferSource(), g = actx.createGain();
-    g.gain.value = opts.vol; s.buffer = b; s.connect(g).connect(actx.destination); s.start();
+    // 語音檔已經做得很大聲；音量調超過 1 時用壓縮器擋住破音
+    const s = actx.createBufferSource(), g = actx.createGain(), comp = actx.createDynamicsCompressor();
+    comp.threshold.value = -6; comp.knee.value = 3; comp.ratio.value = 20; comp.attack.value = 0.002; comp.release.value = 0.1;
+    g.gain.value = opts.vol; s.buffer = b; s.connect(g).connect(comp).connect(actx.destination); s.start();
     return;
   }
   if (!opts.mix) say(item.name);
