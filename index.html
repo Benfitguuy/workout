@@ -29,7 +29,8 @@
     <h2>設定</h2>
     <label class="row"><input type="checkbox" id="opt-beep" checked> 最後 3 秒嗶聲</label>
     <label class="row"><input type="checkbox" id="opt-voice" checked> 唸出下一個動作</label>
-    <label class="row"><input type="checkbox" id="opt-mix" checked> 嗶聲跟音樂一起播（不暫停 Spotify）</label>
+    <label class="row">語音音量 <input type="range" id="opt-vol" min="0.5" max="2.5" step="0.1" style="flex:1;width:auto"></label>
+    <label class="row"><input type="checkbox" id="opt-mix" checked> 跟音樂一起播（不會停掉 YouTube Music）</label>
     <div class="diag">
       <p class="small">🔧 聲音檢查（先開 YouTube Music 放歌，再分別按，看哪個會讓音樂停掉）</p>
       <button id="btn-test-beep" class="ghost">① 試聽嗶聲</button>
