@@ -3,7 +3,7 @@
  * 流程：準備 → 動作 → 休息 → 動作 … → 完成
  */
 'use strict';
-const APP_VERSION = '1.0.2';
+const APP_VERSION = '1.1.0';
 const RING_LEN = 2 * Math.PI * 54; // 圓周長，對應 style.css 的 stroke-dasharray
 
 const $ = (id) => document.getElementById(id);
@@ -14,7 +14,9 @@ const store = {
 const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, '0')}`;
 
 /* ---------------- 設定 ---------------- */
-const opts = { beep: store.get('opt-beep', true), voice: store.get('opt-voice', true), mix: store.get('opt-mix', true) };
+const opts = { beep: store.get('opt-beep', true), voice: store.get('opt-voice', true), mix: store.get('opt-mix', true), vol: store.get('opt-vol', 1.3) };
+$('opt-vol').value = opts.vol;
+$('opt-vol').addEventListener('input', (e) => { opts.vol = Number(e.target.value); store.set('opt-vol', opts.vol); });
 for (const k of ['beep', 'voice', 'mix']) {
   const el = $('opt-' + k);
   el.checked = opts[k];
@@ -43,15 +45,37 @@ function beep(freq = 880, dur = 0.15, vol = 0.5) {
   g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
   o.connect(g).connect(actx.destination); o.start(t); o.stop(t + dur + 0.02);
 }
+/* 語音：用事先產生的語音檔（走跟嗶聲一樣可混音的聲道，不會停掉 YouTube Music）。
+   沒有語音檔時：只有在「不混音」模式才改用手機內建朗讀（內建朗讀會把音樂停掉）。 */
+const voiceBuf = new Map();
+async function loadVoice(url) {
+  if (!url || !actx || voiceBuf.has(url)) return;
+  try { const r = await fetch(url); const ab = await r.arrayBuffer(); voiceBuf.set(url, await actx.decodeAudioData(ab)); } catch {}
+}
+function playVoice(item) {
+  if (!opts.voice || !item) return;
+  const b = item.voice && voiceBuf.get(item.voice);
+  if (b && actx) {
+    const s = actx.createBufferSource(), g = actx.createGain();
+    g.gain.value = opts.vol; s.buffer = b; s.connect(g).connect(actx.destination); s.start();
+    return;
+  }
+  if (!opts.mix) say(item.name);
+}
 function say(text) {
-  if (!opts.voice || !('speechSynthesis' in window)) return;
+  if (!('speechSynthesis' in window)) return;
   const zh = /[㐀-鿿]/.test(text);
   const u = new SpeechSynthesisUtterance(zh ? `下一個，${text}` : `Next, ${text}`);
   u.lang = zh ? 'zh-TW' : 'en-US'; u.rate = 1;
   speechSynthesis.cancel(); speechSynthesis.speak(u);
 }
 $('btn-test-beep').onclick = () => { unlockAudio(); const b = opts.beep; opts.beep = true; beep(); setTimeout(() => beep(880), 1000); setTimeout(() => { beep(1320, 0.4, 0.6); opts.beep = b; }, 2000); };
-$('btn-test-voice').onclick = () => { const v = opts.voice; opts.voice = true; say('Push Ups'); opts.voice = v; };
+$('btn-test-voice').onclick = async () => {
+  unlockAudio();
+  const it = courses.flatMap((c) => c.items).find((i) => i.voice);
+  if (!it) { say('Push Ups'); return; }
+  await loadVoice(it.voice); const v = opts.voice; opts.voice = true; playVoice(it); opts.voice = v;
+};
 (function diagInfo() {
   const ios = (navigator.userAgent.match(/OS (\d+)_(\d+)/) || []).slice(1).join('.');
   const standalone = window.navigator.standalone || matchMedia('(display-mode: standalone)').matches;
@@ -83,6 +107,9 @@ async function loadCourses() {
   }
   if (!('wakeLock' in navigator)) status.textContent += '｜提醒：這支手機可能會自動變暗，請把「自動鎖定」改成「永不」';
   renderCourses();
+  // 先把語音檔抓下來，讓 service worker 存起來（健身房沒網路也有聲音）
+  const urls = [...new Set(courses.flatMap((c) => c.items.map((i) => i.voice)).filter(Boolean))];
+  urls.forEach((u, k) => setTimeout(() => fetch(u).catch(() => {}), 200 * k));
 }
 function courseSeconds(c) {
   const items = c.items || [];
@@ -118,6 +145,7 @@ function buildSegments(c) {
 
 function startCourse(c) {
   unlockAudio(); keepAwake();
+  c.items.forEach((it) => loadVoice(it.voice));
   course = c; segs = buildSegments(c); total = segs.reduce((s, x) => s + x.dur, 0);
   startedAt = Date.now();
   $('home').classList.remove('active'); $('player').classList.add('active');
@@ -141,7 +169,7 @@ function enterSeg(i, silent = false) {
     $('phase-label').textContent = s.type === 'prep' ? '準備開始・UP NEXT' : 'REST・UP NEXT';
     $('move-name').textContent = s.next ? s.next.name : '';
     $('idx').textContent = s.type === 'prep' ? `共 ${workCount} 個動作` : `${s.workIdx + 1} / ${workCount}`;
-    if (!silent) { if (s.type === 'rest') beep(660, 0.3, 0.5); if (s.next) setTimeout(() => say(s.next.name), 350); }
+    if (!silent) { if (s.type === 'rest') beep(660, 0.3, 0.5); if (s.next) setTimeout(() => playVoice(s.next), 350); }
   }
   $('pip-name').textContent = s.next ? s.next.name : '最後一個！';
   $('btn-pause').textContent = '⏸';
