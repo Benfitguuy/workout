@@ -1,5 +1,5 @@
 /* 離線快取：App 本體先用快取（秒開、沒網路也能用），課表先上網拿最新、拿不到再用快取 */
-const VERSION = 'v1.1.0';
+const VERSION = 'v1.1.1';
 const SHELL = ['./', 'index.html', 'style.css', 'app.js', 'manifest.webmanifest',
   'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png', 'data/courses.json'];
 self.addEventListener('install', (e) => {
